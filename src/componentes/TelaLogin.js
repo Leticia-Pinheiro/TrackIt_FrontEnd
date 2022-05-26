@@ -2,50 +2,54 @@ import React from 'react'
 import styled from "styled-components"
 import axios from 'axios'
 import  {Link , useNavigate}  from  'react-router-dom' ;
-import  {  useState ,  useEffect  }  from  "react" ;
+import  {  useState }  from  "react" ;
+import { useContext } from "react";
+
+import UserContext from './contexts/UserContext';
+
 
 
 export default function TelaLogin(){
-    
+    const { setDados } = useContext(UserContext);
     const navigate = useNavigate()
-    
-    const [login, setLogin] = React.useState({
+
+    const [login, setLogin] = useState({
         email: '',
         password: '',
     })
 
     function FazerLogin(event){
-        event.preventDefault();
-        console.log(login)
+        event.preventDefault();        
     }
 
-    function TrocaLogin(e){
+    function MudancaDoInput(e){
         setLogin({
             ...login,
             [e.target.name]: e.target.value,
           }) 
     }
     
-    function Limpar(){
+    function LimparInput(){
         setLogin({
             email: '',
             password: ''
         })
     }
     
-    function Logar(){
-        const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", login)
+    function Logar(){        
+
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", login)
         
-        promisse.then(res => {
-            console.log(res.data)
+        promise.then(res => {            
+            setDados(res.data)            
             navigate("/hoje");
         })
 
-        promisse.catch(erro => {
+        promise.catch(erro => {
             console.log(erro)
             alert("Email ou senha incorretos!")
-            Limpar()
-        })
+            LimparInput()
+        })        
     }
 
     return( 
@@ -53,8 +57,8 @@ export default function TelaLogin(){
         <Container>
 
             <Foto src = "imagens/TrackIt.png" alt = "logo"/>            
-            <CaixaDeTexto name="email" type="email" placeholder="email" value = {login.email} onChange={TrocaLogin}  required  />
-            <CaixaDeTexto name="password" type="password" placeholder="senha" value = {login.password} onChange={TrocaLogin} required />
+            <CaixaDeTexto name="email" type="email" placeholder="email" value = {login.email} onChange={MudancaDoInput}  required  />
+            <CaixaDeTexto name="password" type="password" placeholder="senha" value = {login.password} onChange={MudancaDoInput} required />
             <Entrar onClick={Logar}>Entrar</Entrar>
                         
             <Link to = '/cadastro'>

@@ -3,14 +3,14 @@ import styled from "styled-components"
 import axios from 'axios'
 import  { Link , useNavigate}  from  'react-router-dom' ;
 
-import  {  useState ,  useEffect  }  from  "react" ;
+import  {  useState }  from  "react" ;
 
 
 export default function TelaCadastro(){
 
     let navigate = useNavigate();
     
-    const [cadastro, setCadastro] = React.useState({
+    const [cadastro, setCadastro] = useState({
         email: '',
         name: '',
         image: '',
@@ -21,14 +21,14 @@ export default function TelaCadastro(){
         event.preventDefault();        
     }
 
-    function TrocaCadastro(e){
+    function MudancaDoInput(e){
         setCadastro({
             ...cadastro,
             [e.target.name]: e.target.value,
           }) 
     }
 
-    function Limpar(){
+    function LimparInput(){
         setCadastro({
         email: '',
         name: '',
@@ -38,17 +38,17 @@ export default function TelaCadastro(){
     }
     
     function Cadastrar(){
-        const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", cadastro)
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", cadastro)
         
-        promisse.then(res => {
+        promise.then(res => {
             console.log(res.data)
             navigate("/");
         })
 
-        promisse.catch(erro => {
+        promise.catch(erro => {
             console.log(erro)
             alert("Usuário já cadastrado!")
-            Limpar()
+            LimparInput()
         })
         
     }
@@ -58,10 +58,10 @@ export default function TelaCadastro(){
         <Container>
 
             <Foto src = "imagens/TrackIt.png" alt = "logo"/>            
-            <CaixaDeTexto name="email" type="email" placeholder="email" value = {cadastro.email} onChange={TrocaCadastro} required  />
-            <CaixaDeTexto name="password" type="password" placeholder="senha" value = {cadastro.password} onChange={TrocaCadastro} required />
-            <CaixaDeTexto name="name" type="text" placeholder="nome" value = {cadastro.name} onChange={TrocaCadastro} required  />
-            <CaixaDeTexto name="image" type="url" placeholder="foto" value = {cadastro.image} onChange={TrocaCadastro} required  />
+            <CaixaDeTexto name="email" type="email" placeholder="email" value = {cadastro.email} onChange={MudancaDoInput} required  />
+            <CaixaDeTexto name="password" type="password" placeholder="senha" value = {cadastro.password} onChange={MudancaDoInput} required />
+            <CaixaDeTexto name="name" type="text" placeholder="nome" value = {cadastro.name} onChange={MudancaDoInput} required  />
+            <CaixaDeTexto name="image" type="url" placeholder="foto" value = {cadastro.image} onChange={MudancaDoInput} required  />
             <BotaoCadastrar onClick={Cadastrar}>Cadastrar</BotaoCadastrar>
                         
             <Link to = '/'>
