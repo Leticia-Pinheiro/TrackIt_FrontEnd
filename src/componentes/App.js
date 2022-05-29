@@ -27,7 +27,7 @@ export default function App(){
             <Route path="/hoje" element={<TelaHoje />} />
             <Route path="/historico" element={<TelaHistorico />} />
         </Routes>
-    </BrowserRouter>
+    </BrowserRouter> 
     </UserContext.Provider>
     
     

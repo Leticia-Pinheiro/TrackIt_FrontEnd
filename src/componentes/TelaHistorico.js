@@ -35,4 +35,6 @@ export default function TelaHistorico(){
 }
 
 const Container = styled.div `
-    margin-top: 70px;`
+    margin-top: 70px;
+    height: 100vh;
+    background-color: #E5E5E5;`

@@ -13,16 +13,16 @@ export default function TopoMenu(){
     const foto = dados.image
     const token = dados.token
 
-    useEffect(() => {
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        }
+    // useEffect(() => {
+    //     const config = {
+    //         headers: {
+    //             "Authorization": `Bearer ${token}`
+    //         }
+    //     }
 
-        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
-        promise.then(console.log(token))
-    })
+    //     const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
+    //     promise.then(console.log(token))
+    // })
     
 
     return(
@@ -34,9 +34,9 @@ export default function TopoMenu(){
             </Cabecalho>
 
             <Menu>
-                <Link to = "/habitos"><span>Hábitos</span></Link>                
-                <Link to = "/hoje"><span>Hoje</span></Link>
-                <Link to = "/historico"><span>Histórico</span></Link>              
+                <Link to = "/habitos" style={{ textDecoration: 'none' }} ><span>Hábitos</span></Link>                
+                <Link to = "/hoje" style={{ textDecoration: 'none' }} ><span>Hoje</span></Link>
+                <Link to = "/historico" style={{ textDecoration: 'none' }} ><span>Histórico</span></Link>              
                 
             </Menu>
         </Container>
