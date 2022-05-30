@@ -16,25 +16,42 @@ export default function TelaHabitos(){
 
 
         
-
-        useEffect(() => {
-            const config = {
-                headers: {
-                    "Authorization" : `Bearer ${token}`
-                }
+    function ListarHabitos(){
+        const config = {
+            headers: {
+                "Authorization" : `Bearer ${token}`
             }
-   
-            const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
-   
-            promise.then(res => {
-                setHabitos(...habitos, res.data)
-            })
-            
-            promise.catch(err =>{
-                console.log(err)
-            })
-            
+        }
+
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
+
+        promise.then(res => {
+            setHabitos(...habitos, res.data)
+        })
+        
+        promise.catch(err =>{
+            console.log(err)
+        })
+    }
+        useEffect(() => {
+            ListarHabitos();           
         }, [])
+
+    function DeletarHabito(id){
+        const config = {
+            headers: {
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+
+        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
+
+        promise.then({ListarHabitos})
+        
+        promise.catch(err =>{
+            console.log(err)
+        })
+    }
     
     
 
@@ -52,12 +69,19 @@ export default function TelaHabitos(){
                 <span>Meus Hábitos</span>    
                 <button onClick = {() => setEscondido(!escondido)}>+</button>
             </Titulo> 
-            {(escondido === true)? <CriarHabito/> : <></>}   
 
+            <CriarHabito escondido = {escondido} setEscondido = {() => setEscondido()} ListarHabitos= {() => ListarHabitos()}/>
+            {/* {(escondido === true)? <CriarHabito ListarHabitos = {() => ListarHabitos()}/> : <></>}    */}
+
+        
             {habitos? (
                 habitos.map((habitos) => (
                     <ContainerHabito key = {habitos.id}>
-                        <NomeHabito>{habitos.name}</NomeHabito>
+                        <Topo>
+                        <span>{habitos.name}</span>
+                        <ion-icon name="trash-outline" onClick = {() => DeletarHabito(habitos.id)}></ion-icon>
+                        </Topo>
+                        
                         <DiasDaSemana>
                             {dias.map((dia, index) => {
                                 return(
@@ -67,7 +91,7 @@ export default function TelaHabitos(){
                                 )
                             })}
                         </DiasDaSemana>
-                        {/* botaoDeletar */}
+                        
                     </ContainerHabito>
                 ))
             ): (
@@ -84,13 +108,13 @@ export default function TelaHabitos(){
     )
 }
 
+
 const Container = styled.div `    
-    margin-top: 70px;
-    height: 100vh;
-    background-color: #E5E5E5;
+    margin: 70px 0;     
+    height: 100vh;    
+    background-color: #E5E5E5;    
     display:flex;
-    flex-direction: column;
-    
+    flex-direction: column;    
     align-items:center;`
     
 
@@ -141,25 +165,37 @@ const ContainerHabito = styled.div`
     background: #FFFFFF;
     border-radius: 5px;
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;
+    justify-content: center;   
     align-items: center;
 `
 
-const NomeHabito = styled.p `  
-    margin-top: 13px;         
-    width: 303px;
-    height: 45px;    
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19.976px;      
-    color:##DBDBDB;`
+const Topo = styled.div ` 
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 13px;
+    margin-left: 15px;
+
+    span{
+        margin-top: 13px;         
+        width: 303px;
+        height: 45px;    
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19.976px;      
+        color:##DBDBDB;}
+    
+    ion-icon{
+        font-size: 17px;
+    }`
 
 const DiasDaSemana = styled.div `
     width: 303px;
-    display: flex;
-    margin-top: 8px;
+    display: flex;    
     margin-bottom: 15px;
+    
     `
 
 const Dia = styled.div `

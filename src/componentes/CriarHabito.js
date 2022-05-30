@@ -1,10 +1,10 @@
-import { useContext, useState} from "react"
+import { useContext, useState, useParams} from "react"
 import axios from 'axios'
 import styled from 'styled-components'
 import UserContext from "./contexts/UserContext"
 
-export default function CriarHabito(){
-
+export default function CriarHabito({escondido, setEscondido, ListarHabitos}){    
+    
     const {dados} = useContext(UserContext)    
     const token = dados.token
     const [selecionado, setSelecionado] = useState(false)
@@ -39,23 +39,38 @@ export default function CriarHabito(){
     function AddNovoHabito(event){
         event.preventDefault(); 
 
-        console.log(habito)
-
+        if  (habito.days.length <= 0)  {
+            alert ( "Selecione os dias!" )
+        }
         
-            const config = {
-                 headers: {
-                     "Authorization" : `Bearer ${token}`
-                 }
+        const config = {
+            headers: {
+                "Authorization" : `Bearer ${token}`
             }
+        }
     
-            const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", habito, config)
-            promise.then(console.log("hello"))
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", habito, config)
+        promise.then(() => {
+            setHabito({
+                name: '',
+                days: []});          
+                
+            // ListarHabitos(); 
+            setEscondido(false);          
+                
+            
+            })
+
+        promise.catch((err) => {
+            console.log(err)
+        })
+
             
             
                    
     }
 
-    return(
+    return escondido === true? (
         <form onSubmit={AddNovoHabito}>
             
             <CadastraHabito>
@@ -70,18 +85,21 @@ export default function CriarHabito(){
                     })}
                 </DiasDaSemana>
                 <Botoes>
-                    <BotaoCancelar>Cancelar</BotaoCancelar>
+                    <BotaoCancelar onClick = {() => setEscondido(false)}>Cancelar</BotaoCancelar>
                     <BotaoSalvar onClick={AddNovoHabito}>Salvar</BotaoSalvar>
                 </Botoes>
             </CadastraHabito>
             
         </form>
-    )    
+    ) : (
+        <></>
+    )  
 }
 
 
 
-const CadastraHabito = styled.div`   
+const CadastraHabito = styled.div`  
+    margin-bottom: 10px;
     width: 340px;
     height: 180px;
     background: #FFFFFF;
