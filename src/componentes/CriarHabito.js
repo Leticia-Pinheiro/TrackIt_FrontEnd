@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState} from "react"
+import { useContext, useState} from "react"
 import axios from 'axios'
 import styled from 'styled-components'
 import UserContext from "./contexts/UserContext"
@@ -12,11 +12,7 @@ export default function CriarHabito(){
     const [habito, setHabito] = useState({
         name: '',
         days: []
-    })
-
-    function Tela(event){
-        
-    }
+    })    
 
     function MudancaDoInput(e){
         setHabito({
@@ -44,7 +40,8 @@ export default function CriarHabito(){
         event.preventDefault(); 
 
         console.log(habito)
-        useEffect(() => {
+
+        
             const config = {
                  headers: {
                      "Authorization" : `Bearer ${token}`
@@ -55,7 +52,7 @@ export default function CriarHabito(){
             promise.then(console.log("hello"))
             
             
-             })        
+                   
     }
 
     return(

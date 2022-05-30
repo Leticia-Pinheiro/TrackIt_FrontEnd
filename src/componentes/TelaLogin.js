@@ -102,6 +102,7 @@ export default function TelaLogin(){
         }`
 
     const Entrar = styled.button `
+        border: none;
         margin-top:3px;
         margin-bottom:25px;
         width: 303px;

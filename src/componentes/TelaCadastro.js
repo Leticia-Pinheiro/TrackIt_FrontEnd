@@ -105,6 +105,7 @@ export default function TelaCadastro(){
         }`
 
     const BotaoCadastrar = styled.button `
+        border: none;
         margin-top:3px;
         margin-bottom:25px;
         width: 303px;

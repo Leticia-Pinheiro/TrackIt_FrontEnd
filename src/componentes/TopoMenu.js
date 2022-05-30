@@ -1,5 +1,4 @@
-import { useEffect, useContext} from "react"
-import axios from 'axios'
+import { useContext} from "react"
 import styled from 'styled-components'
 import UserContext from "./contexts/UserContext"
 import { Link } from "react-router-dom"
@@ -10,35 +9,22 @@ import "react-circular-progressbar/dist/styles.css";
 export default function TopoMenu(){
     
     const {dados} = useContext(UserContext)
-    const foto = dados.image
-    const token = dados.token
-
-    // useEffect(() => {
-    //     const config = {
-    //         headers: {
-    //             "Authorization": `Bearer ${token}`
-    //         }
-    //     }
-
-    //     const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
-    //     promise.then(console.log(token))
-    // })
-    
+    const foto = dados.image    
 
     return(
         <Container> 
+            
             <Cabecalho>
                 <span>TrackIt</span>
                 <img src = {foto} alt = "foto-do-usuario"/>
-
             </Cabecalho>
 
             <Menu>
                 <Link to = "/habitos" style={{ textDecoration: 'none' }} ><span>Hábitos</span></Link>                
                 <Link to = "/hoje" style={{ textDecoration: 'none' }} ><span>Hoje</span></Link>
                 <Link to = "/historico" style={{ textDecoration: 'none' }} ><span>Histórico</span></Link>              
-                
             </Menu>
+
         </Container>
     )
 }
